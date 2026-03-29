@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  ml-inference:
+    build:
+      context: .
+      [cite_start]dockerfile: Dockerfile.slim [cite: 175]
+    volumes:
+      - .:/app
