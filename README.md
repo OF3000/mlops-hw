@@ -54,3 +54,13 @@ kubectl get pods -n application
 
 Як перевірити в UI:
 Знайдіть плитку mlflow. Вона повинна бути Synced (зелена галочка) та Healthy (зелене серце).
+
+Видалення ресурсів:
+
+cd leson7/argocd
+
+# Запуск процесу видалення
+terraform destroy -auto-approve
+
+## 🔗 5. Корисні посилання
+* **GitOps Репозиторій з application.yaml:** [https://github.com/OF3000/goit-argo](https://github.com/OF3000/goit-argo)
