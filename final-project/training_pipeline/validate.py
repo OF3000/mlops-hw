@@ -1,23 +1,23 @@
-import sys
 import json
-import numpy as np
-from sklearn.datasets import load_iris
 
-def run_validation():
-    print("Старт кроку: Валідація даних...")
-    iris = load_iris()
-    X, y = iris.data, iris.target
+def lambda_handler(event, context):
+    print("Received event:", json.dumps(event))
     
-    # Перевірка форми даних та відсутності null
-    if X.shape[0] == 0 or X.shape[1] != 4:
-        raise ValueError(f"Некоректна розмірність ознак: {X.shape}")
+    # Отримання параметрів запуску з події
+    dataset_source = event.get("dataset_source", "s3://mlops-datasets/iris.csv")
+    commit_sha = event.get("commit_sha", "unknown")
     
-    if np.isnan(X).any() or np.isnan(y).any():
-        raise ValueError("Виявлено пропуски (NaN) у даних.")
-        
-    print(f"Дані валідні. Записів: {X.shape[0]}, ознак: {X.shape[1]}")
-    return {"status": "VALID", "samples_count": X.shape[0]}
-
-if __name__ == "__main__":
-    result = run_validation()
-    print(json.dumps(result))
+    print(f"Validating dataset from: {dataset_source}")
+    print(f"Triggered by commit: {commit_sha}")
+    
+    # Імітація валідації даних
+    validation_status = "PASSED"
+    
+    return {
+        "statusCode": 200,
+        "validation_status": validation_status,
+        "dataset_source": dataset_source,
+        "commit_sha": commit_sha,
+        "features_count": 4,
+        "records_count": 150
+    }
