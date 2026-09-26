@@ -1,0 +1,20 @@
+groups:
+  - name: mlops_model_alerts
+    rules:
+      - alert: HighInferenceLatency
+        expr: histogram_quantile(0.95, sum(rate(prediction_latency_seconds_bucket[5m])) by (le)) > 0.5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Висока затримка інференсу моделі (p95 > 500ms)"
+          description: "Модель {{ $labels.model_version }} відповідає довше ніж 500 мс на 95-му перцентилі."
+
+      - alert: HighInferenceErrorRate
+        expr: sum(rate(prediction_requests_total{status="error"}[5m])) / sum(rate(prediction_requests_total[5m])) > 0.05
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Високий рівень помилок інференсу (> 5%)"
+          description: "Понад 5% запитів до моделі {{ $labels.model_version }} завершуються помилкою 500."
