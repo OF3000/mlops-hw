@@ -34,7 +34,7 @@ def readiness_check():
     return {"status": "ready"}
 
 @app.post("/predict", response_model=PredictResponse)
-@limiter.limit("60/minute")
+@limiter.limit("5/minute")
 def predict(payload: PredictRequest, request: Request):
     start_time = time.time()
     try:

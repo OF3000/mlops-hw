@@ -2,8 +2,12 @@ import json
 import numpy as np
 import pandas as pd
 from sklearn.datasets import load_iris
-from evidently.report import Report
-from evidently.metric_preset import DataDriftPreset
+try:
+    from evidently.report import Report
+    from evidently.metric_preset import DataDriftPreset
+except ModuleNotFoundError:
+    from evidently.legacy.report import Report
+    from evidently.legacy.metric_preset import DataDriftPreset
 
 def check_data_drift():
     print("Запуск перевірки на Data Drift через Evidently AI...")

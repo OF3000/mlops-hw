@@ -1,9 +1,37 @@
+# Terraform
 .terraform/
+**/.terraform/*
 *.tfstate
 *.tfstate.*
+*.tfvars
+*.tfvars.json
 .terraform.lock.hcl
+crash.log
+crash.*.log
+
+# Python & Environment
+venv/
+.venv/
+env/
 __pycache__/
 *.pyc
+*.py[cod]
+
+# Secrets & Cloud Credentials
 .env
+kubeconfig*
+*.pem
+*.key
+
+# ML Artifacts & Temp
 mlruns/
 *.zip
+*.pkl
+*.joblib
+*.onnx
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

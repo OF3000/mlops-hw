@@ -1,6 +1,7 @@
 from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
 
 import os
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -9,6 +10,8 @@ from sklearn.datasets import load_iris
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, log_loss
+
+import joblib
 
 # Параметри
 learning_rate = 0.01
@@ -62,3 +65,10 @@ with mlflow.start_run(experiment_id=experiment_id):
     pushgateway_url = os.getenv("PUSHGATEWAY_URL", "localhost:9091")
     push_to_gateway(pushgateway_url, job='iris_training_job', registry=registry)
     print(f"✅ Метрики успішно надіслано в Pushgateway ({pushgateway_url})")
+
+
+    
+    os.makedirs("models", exist_ok=True)
+    joblib.dump(model, "models/model.joblib")
+    joblib.dump((X_test, y_test), "models/test_data.joblib")
+    print("✅ Модель та тестові дані збережено для evaluation.")
